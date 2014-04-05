@@ -77,6 +77,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Passenger.cpp" />
+    <ClCompile Include="Reservation_List.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Passenger.h" />
+    <ClInclude Include="Reservation_List.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
