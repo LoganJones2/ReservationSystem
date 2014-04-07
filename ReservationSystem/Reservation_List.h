@@ -8,10 +8,18 @@ public:
 	Reservation_List();
 	~Reservation_List();
 
-	void insert_reservation(int, int, std::string, std::string, int, int);
+	void insert_passenger(int, int, std::string, std::string, int, int);
 	bool delete_reservation(int);
-	void print_list();
+	void p_list();
+	bool seatTaken(int);
+	void p_passenger(int);
+
+	void run();
 private:
-	Passenger *head;
+	Passenger* head = NULL;
+	int reservation_counter = 0;
+	int number_of_digits(int);
+	void clear_screen();
+	template<typename T> void printElement(T, const int&);
 };
 
