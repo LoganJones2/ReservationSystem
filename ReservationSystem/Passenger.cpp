@@ -5,7 +5,7 @@ Passenger::Passenger(int new_reservation_number,
 	std::string new_first_name, 
 	std::string new_last_name, 
 	int new_menu_preference, 
-	int new_phone_number)
+	std::string new_phone_number)
 {
 	m_reservation_number = new_reservation_number;
 	m_seat_number = new_seat_number;
@@ -40,7 +40,7 @@ int Passenger::menu_preference()
 	return m_menu_preference;
 }
 
-int Passenger::phone_number()
+std::string Passenger::phone_number()
 {
 	return m_phone_number;
 }
@@ -48,4 +48,14 @@ int Passenger::phone_number()
 int Passenger::reservation_number()
 {
 	return m_reservation_number;
+}
+
+void Passenger::set_menu_preference(int x)
+{
+	m_menu_preference = x;
+}
+
+void Passenger::set_seat_number(int x)
+{
+	m_seat_number = x;
 }
