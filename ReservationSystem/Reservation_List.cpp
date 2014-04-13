@@ -1,6 +1,6 @@
 /*!
-  The Reservation List class handles all the searching, sorting, deletion,
-  modification, and presentation of Passenger reservation data. 
+The Reservation List class handles all the searching, sorting, deletion,
+modification, and presentation of Passenger reservation data.
 */
 
 #include "Reservation_List.h"
@@ -19,20 +19,20 @@ Reservation_List::~Reservation_List()
 }
 
 void Reservation_List::insert_passenger(int reservation_number,
-	int seat_number, 
-	std::string first_name, 
-	std::string last_name, 
-	std::string phone_number, 
+	int seat_number,
+	std::string first_name,
+	std::string last_name,
+	std::string phone_number,
 	int menu_preference)
 {
 	//insert first node if list is empty
 	if (head == NULL)
 	{
 		head = new Passenger(
-			reservation_number, 
-			seat_number, 
-			first_name, 
-			last_name, 
+			reservation_number,
+			seat_number,
+			first_name,
+			last_name,
 			menu_preference,
 			phone_number);
 		return;
@@ -69,12 +69,12 @@ void Reservation_List::insert_passenger(int reservation_number,
 				prev->next_passanger = current;
 				return;
 			}
-			
+
 		}
 		current->next_passanger = temp;
 	}
 
-	
+
 }
 
 void Reservation_List::p_list()
@@ -217,7 +217,7 @@ void Reservation_List::run()
 				switch (option)
 				{
 				case 1:
-					
+
 					std::cout << "First Name: ";
 					std::cin >> new_first_name;
 
@@ -248,30 +248,30 @@ void Reservation_List::run()
 						std::cout << "Seat Number: ";
 						std::cin >> new_seat_number;
 
-						if (std::cin.good() && 
-							new_seat_number <= 122 && 
-							new_seat_number > 0 && 
+						if (std::cin.good() &&
+							new_seat_number <= 122 &&
+							new_seat_number > 0 &&
 							!seatTaken(new_seat_number))
 						{
 							break;
 						}
-						
+
 						// Throw seat errors.
 						if (seatTaken(new_seat_number))
 						{
 							std::cout << "Seat already taken"
-								<<std::endl;
+								<< std::endl;
 							empty_buffer();
 						}
 						else
 						{
-							std::cout << "Seat number does not exist for this flight!" 
+							std::cout << "Seat number does not exist for this flight!"
 								<< std::endl;
 							empty_buffer();
 						}
 					}
 
-					std::cout << std::endl 
+					std::cout << std::endl
 						<< " 1. Turkey Sandwich" << std::endl
 						<< " 2. Shrimp Pasta" << std::endl
 						<< " 3. Steak and Potatoes" << std::endl;
@@ -279,8 +279,8 @@ void Reservation_List::run()
 					{
 						std::cout << "Menu Option: ";
 						std::cin >> new_menu_preference;
-						if (std::cin.good() && 
-							new_menu_preference <= 3 && 
+						if (std::cin.good() &&
+							new_menu_preference <= 3 &&
 							new_menu_preference > 0)
 						{
 							break;
@@ -294,11 +294,11 @@ void Reservation_List::run()
 
 					reservation_counter++;
 					new_reservation_number = reservation_counter;
-					insert_passenger(new_reservation_number, 
-						new_seat_number, 
-						new_first_name, 
-						new_last_name, 
-						new_telephone_number, 
+					insert_passenger(new_reservation_number,
+						new_seat_number,
+						new_first_name,
+						new_last_name,
+						new_telephone_number,
 						new_menu_preference);
 					std::cout << std::endl << "Passanger added!" << std::endl << std::endl;
 					wait_for_enter();
@@ -363,7 +363,7 @@ void Reservation_List::run()
 							empty_buffer();
 						}
 					}
-					
+
 
 
 					break;
@@ -420,16 +420,16 @@ int Reservation_List::number_of_digits(int number)
 
 void Reservation_List::clear_screen()
 {
-	#ifdef WIN32
-		std::system("CLS");
-	#else
-		std::system("CLEAR");
-	#endif	
+#ifdef WIN32
+	std::system("CLS");
+#else
+	std::system("CLEAR");
+#endif	
 
 }
 
 void Reservation_List::p_passenger(int reservation_number)
-{	
+{
 	std::pair<Passenger*, Passenger*> pointers = p_search(reservation_number);
 	Passenger *current = pointers.second;
 	Passenger *previous = pointers.first;
@@ -467,17 +467,28 @@ bool Reservation_List::modify_passenger(int reservation)
 	int meal = -1;
 	int seat = -1;
 
+	if (current == NULL)
+	{
+		std::cout << "Reservation not found!" << std::endl << std::endl;
+		return false;
+	}
+
 	while (true)
 	{
+		//Print current seat number.  Then, ask for changes
+		std::cout << "Current seat number: " << current->seat_number() << std::endl;
+
 		std::cout << "Enter -1 for no change." << std::endl;
 		std::cout << "Seat Number: ";
 		std::cin >> seat;
 
-		if (seat == 0)
+		//if -1, no change to seat number
+		if (seat == -1)
 		{
 			break;
 		}
 
+		//validate new seat number
 		if (std::cin.good() &&
 			seat <= 122 &&
 			seat > 0 &&
@@ -504,12 +515,24 @@ bool Reservation_List::modify_passenger(int reservation)
 	std::cout << std::endl
 		<< " 1. Turkey Sandwich" << std::endl
 		<< " 2. Shrimp Pasta" << std::endl
-		<< " 3. Steak and Potatoes" << std::endl;
+		<< " 3. Steak and Potatoes" << std::endl << std::endl;
+
+	//Print current menu choice.  Then ask for changes
+	std::cout << std::endl << "Current menu choice: " << current->menu_preference() << std::endl;
+
 	while (true)
 	{
 		std::cout << "Enter -1 for no change." << std::endl;
 		std::cout << "Menu Option: ";
 		std::cin >> meal;
+
+		//if -1, no change to menu option
+		if (meal == -1)
+		{
+			break;
+		}
+
+		//validate menu option
 		if (std::cin.good() &&
 			meal <= 3 &&
 			meal > 0)
@@ -523,20 +546,23 @@ bool Reservation_List::modify_passenger(int reservation)
 		}
 	}
 
-
-	if (current == NULL)
-	{
-		return false;
+	if (seat == -1 && meal == -1){
+		std::cout << std::endl << "No changes made!" << std::endl << std::endl;
+		return true;
 	}
 
-	if (current != NULL && meal != -1)
-	{
-		current->set_menu_preference(meal);
-	}
-
+	//check to see if modification necessary for seat number
 	if (current != NULL && seat != -1)
 	{
 		current->set_seat_number(seat);
+		std::cout << "Seat number updated!" << std::endl;
+	}
+
+	//check to see if modification necessary for meal option
+	if (current != NULL && meal != -1)
+	{
+		current->set_menu_preference(meal);
+		std::cout << "Menu preference updated!" << std::endl;
 	}
 
 	return true;
