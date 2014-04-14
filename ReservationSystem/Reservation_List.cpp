@@ -129,14 +129,19 @@ bool Reservation_List::delete_reservation(int reservation)
 		return false;
 	}
 
+    //cancellation is first passenger in list
 	if (current == head)
 	{
-		head = NULL;
-		return true;
+		//Move head.  Then delete passenger node
+        head = head->next_passanger;
+		delete current;
+        return true;
 	}
 
-	current = current->next_passanger;
-	previous->next_passanger = current;
+	//Connect previous passenger node to next.  Then delete.
+    previous->next_passanger = current->next_passanger;
+	delete current;
+	return true;
 }
 
 void Reservation_List::empty_buffer()
