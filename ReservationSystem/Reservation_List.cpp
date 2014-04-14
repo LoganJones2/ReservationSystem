@@ -198,7 +198,8 @@ void Reservation_List::run()
 			<< " 3. Search" << std::endl
 			<< " 4. Modify Reservation" << std::endl
 			<< " 5. Print Passenger List" << std::endl
-			<< " 6. Exit" << std::endl;
+			<< " 6. Print Report" << std::endl
+            << " 7. Exit" << std::endl;
 
 		int option = 0;
 		bool o_valid = false;
@@ -209,7 +210,7 @@ void Reservation_List::run()
 			std::cin >> option;
 			std::cout << std::endl;
 
-			if (std::cin.good() && option <= 6 && option >= 1)
+			if (std::cin.good() && option <= 7 && option >= 1)
 			{
 				o_valid = true;
 				int new_reservation_number;
@@ -379,6 +380,11 @@ void Reservation_List::run()
 					clear_screen();
 					break;
 				case 6:
+					print_report();
+					wait_for_enter();
+					clear_screen();
+                    break;
+                case 7:
 					break;
 				default:
 					break;
@@ -394,7 +400,14 @@ void Reservation_List::run()
 				break;
 			}
 		}
+        if (option == 7){
+		    break;
+	    }
 	}
+
+	std::cout << "Thank you for using our reservation system." << std::endl;
+	wait_for_enter(); 
+
 }
 
 bool Reservation_List::seatTaken(int seat)
@@ -571,4 +584,39 @@ bool Reservation_List::modify_passenger(int reservation)
 	}
 
 	return true;
+}
+
+void Reservation_List::print_report(){
+	Passenger *temp = head;
+	int count_turkey = 0, count_shrimp = 0,
+		count_steak = 0, count_passengers = 0;
+
+	while (temp != NULL){
+		//add passenger
+        count_passengers++;
+		if (temp->menu_preference() == 1){
+			count_turkey++;
+		}
+		else if (temp->menu_preference() == 2){
+			count_shrimp++;
+		}
+		else if (temp->menu_preference() == 3){
+			count_steak++;
+		}
+
+		temp = temp->next_passanger;
+	}
+
+	//print headings for report
+    printElement("Passengers", 15);
+	printElement("Turkey", 10);
+	printElement("Shrimp", 10);
+	printElement("Steak", 10);
+	std::cout << std::endl;
+
+	printElement(count_passengers, 15);
+	printElement(count_turkey, 10);
+	printElement(count_shrimp, 10);
+	printElement(count_steak, 10);
+	std::cout << std::endl << std::endl;
 }

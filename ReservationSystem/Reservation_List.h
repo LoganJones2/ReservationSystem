@@ -26,6 +26,7 @@ private:
 	void wait_for_enter();
 	std::pair<Passenger*, Passenger*> p_search(int);
 	bool modify_passenger(int);
+	void print_report();
 
 };
 
