@@ -592,9 +592,11 @@ void Reservation_List::print_report(){
 		count_steak = 0, count_passengers = 0;
 
 	while (temp != NULL){
-		//add passenger
+		//count passenger
         count_passengers++;
-		if (temp->menu_preference() == 1){
+		
+        //count how many of each menu choice
+        if (temp->menu_preference() == 1){
 			count_turkey++;
 		}
 		else if (temp->menu_preference() == 2){
@@ -614,6 +616,7 @@ void Reservation_List::print_report(){
 	printElement("Steak", 10);
 	std::cout << std::endl;
 
+    //print number of passengers, and how many of each menu choice
 	printElement(count_passengers, 15);
 	printElement(count_turkey, 10);
 	printElement(count_shrimp, 10);
